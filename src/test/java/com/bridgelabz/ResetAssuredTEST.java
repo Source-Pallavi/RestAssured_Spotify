@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 
 public class ResetAssuredTEST
-{
+{Response response;
     private static String token = "";
     private String playlists[];
     private int totalPlayList;
@@ -15,12 +15,13 @@ public class ResetAssuredTEST
     String uid = "";
     String JSON = "application/json";
 
-    //Before method
+
     @BeforeMethod
     public void setUp()
     {
-        token="Bearer BQBoqlJrc5LRPhPHthUWE43ETWp_o1vC7riBabRwJDpljGYU3l-t6DsjcNsaDTKEEAs10XxjDxF535PqyVfAlOau-rrYiARKSPLRgB66VGkV63FsLp9fs9Roqk_8zCwpXUpwZDiLKYs8VOCr0aIuO_WomRPt0AHMLHqMaoCudfChTXQJErfj-WeGUctjKdzdwYVaoBzATXaWO7cnFgfNMlsnxsmRhxi_r4wBhZ1hjqht_MsMFjldCkriN0nLGCD4eCURbWj3epqKuqNCZ5ImJyI2jAYLpjfUXHdR";
-        Response response = given().contentType(JSON).accept(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/me");
+        token=
+                "Bearer BQC80Va9aw91gG8eSDlAa_5n9RTkxgkz_vyvwKORpqShLSJJ-XJdEillqmkC7TVkUZJNGIOLuME8Nsch-bt6yJ_mWY72ONYoUMd3mwrDLRcoIbnykv3WAcnRE7glRuin7NKPSDt01fpqMk1C8xEv20RhKPzzujPD_frqzj_dWfoyezhTlbufFZXawfN-mWpDaA5cyLjfxldgILKtTb1b1me65SWtiCVNSXFfE00Xjd7UqswmZZyzFnXuACyTOTSFhjF9yWzTy5oAH_Ie5ECb_q-xzQisaXEyHXp1";
+         response = given().contentType(JSON).accept(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/me");
         uid = response.path("id");
         response.then().assertThat().statusCode(200);
         System.out.println(uid);
@@ -28,10 +29,14 @@ public class ResetAssuredTEST
     }
     @Test
     public void getUserDetail_Name() {
-        String name = given().contentType(JSON).accept(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/me")
-       .path("display_name"); //get user display name
-        given().contentType(JSON).accept(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/me").then().assertThat().statusCode(200); //check for status code
+        String name = response.path("display_name");
+        response.then().assertThat().statusCode(200);
         System.out.println(name);
     }
-
+    @Test
+    public void get_UserProfile() {
+        response.path("id");
+        response.then().assertThat().statusCode(200);//check for status code
+        response.prettyPrint(); //print current user profile
+    }
 }
