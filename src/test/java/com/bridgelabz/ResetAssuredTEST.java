@@ -9,9 +9,7 @@ import static io.restassured.RestAssured.given;
 public class ResetAssuredTEST
 {Response response;
     private static String token ;
-    private String playlists[];
-    private String trackId[];
-    private String userID = "";
+    private String userID ;
     private String JSON = "application/json";
 
 
@@ -32,12 +30,14 @@ public class ResetAssuredTEST
         response.then().assertThat().statusCode(200);
         System.out.println(name);
     }
+/*get information of playlist*/
     @Test
     public void get_UserProfile() {
         response.path("id");
-        response.then().assertThat().statusCode(200);//check for status code
-        response.prettyPrint(); //print current user profile
+        response.then().assertThat().statusCode(200);
+        response.prettyPrint();
     }
+    /*to create play list*/
     @Test
     public void create_PlayListSpotify() {
          response = given().accept(JSON).contentType(JSON).header("Authorization", token)
@@ -47,6 +47,7 @@ public class ResetAssuredTEST
         System.out.println("PlayList Name:" + response.path("name"));
         response.then().assertThat().statusCode(201);
     }
+    /*to find the total no of playlist is present*/
     @Test
     public void getPlayList() {
          response = given().accept(JSON).contentType(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/users/" + userID + "/playlists");
