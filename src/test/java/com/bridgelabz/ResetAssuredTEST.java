@@ -39,4 +39,17 @@ public class ResetAssuredTEST
         response.then().assertThat().statusCode(200);//check for status code
         response.prettyPrint(); //print current user profile
     }
+    @Test
+    public void create_PlayListSpotify() {
+         response = given()
+                .accept(JSON)
+                .contentType(JSON)
+                .header("Authorization", token)
+                .body("{\"name\": \"Prad\"," +
+                        "\"description\": \"New playlist description\"," +
+                        "\"public\": false}").when().post(" https://api.spotify.com/v1/users/" + uid + "/playlists");
+        String path = response.path("owner.display_name");
+        System.out.println("PlayList Name:" + response.path("name"));
+        response.then().assertThat().statusCode(201);
+    }
 }
