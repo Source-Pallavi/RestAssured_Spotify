@@ -12,7 +12,7 @@ public class ResetAssuredTEST
     private String playlists[];
     private String trackId[];
     private String userID = "";
-    String JSON = "application/json";
+    private String JSON = "application/json";
 
 
     @BeforeMethod
@@ -48,9 +48,9 @@ public class ResetAssuredTEST
         response.then().assertThat().statusCode(201);
     }
     @Test
-    public void getUserPlayListInfo() {
+    public void getPlayList() {
          response = given().accept(JSON).contentType(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/users/" + userID + "/playlists");
         response.then().assertThat().statusCode(200);
-        System.out.println("Total PlayList:" +  response.path("total"));
+        System.out.println("Total no. of PlayList:" +  response.path("total"));
     }
 }
