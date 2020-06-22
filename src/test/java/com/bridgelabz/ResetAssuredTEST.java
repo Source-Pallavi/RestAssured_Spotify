@@ -18,14 +18,15 @@ public class ResetAssuredTEST
     {
         token=
                 "Bearer BQCUfUzDZipmQ2RC-W8LRapV929CxqFm4_0yKq2GV02YBnTa5CfKg2-O0Oxj9EiHNXsylFCYhgMrnSH3JRKVdrV6X52sfpgzw_YYNLhOLF7cOPo_Yw_mnMqai2VBQcWccNS8hri2_wk49Paweuyuf0EnhSE6wuDnafP2alxDy2paFAmNOjDtdSC4XBTJRifaVcLrQpo__-Xk518KBPrT2KMiz-EcPubNee46-ByiYGKH_Ksd-KqS6fLBFujl35jo1uRnCieipmsesYQf-8ugHAodT0HKKEcj17HV";
-         response = given().contentType(JSON).accept(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/me");
+
+    }
+    @Test
+    public void getUserDetail_Name() {
+        response = given().contentType(JSON).accept(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/me");
         userID = response.path("id");
         response.then().assertThat().statusCode(200);
         System.out.println(userID);
         /* to fetch the user id*/
-    }
-    @Test
-    public void getUserDetail_Name() {
         String name = response.path("display_name");
         response.then().assertThat().statusCode(200);
         System.out.println(name);
@@ -33,6 +34,11 @@ public class ResetAssuredTEST
 /*get information of playlist*/
     @Test
     public void get_UserProfile() {
+        response = given().contentType(JSON).accept(JSON).header("Authorization", token).when().get("https://api.spotify.com/v1/me");
+        userID = response.path("id");
+        response.then().assertThat().statusCode(200);
+        System.out.println(userID);
+        /* to fetch the user id*/
         response.path("id");
         response.then().assertThat().statusCode(200);
         response.prettyPrint();
@@ -54,4 +60,5 @@ public class ResetAssuredTEST
         response.then().assertThat().statusCode(200);
         System.out.println("Total no. of PlayList:" +  response.path("total"));
     }
+
 }
